@@ -196,7 +196,15 @@ while True:
                 momia.rect.x = 400
                 #sistema de turnos
                 if turno == False:
-                    momia.rect.x = heroe_guerrero.rect.x - momia.rect.x + 10
+                    #programación de la momia
+                    if key_pressed[pygame.K_UP]:
+                        momia.rect.move_ip(0,-30)
+                    if key_pressed[pygame.K_DOWN]:
+                        momia.rect.move_ip(0,30)
+                    if key_pressed[pygame.K_RIGHT]:
+                        momia.rect.move_ip(-30,0)
+                    if key_pressed[pygame.K_RIGHT]:
+                        momia.rect.move_ip(30,0)
 
 ###-------------------EVENTOS--------------------------###
         ##movimiento###
@@ -207,26 +215,64 @@ while True:
             heroe_guerrero.rect.move_ip(0,-30)
             #PANTALLA.fill(BLANCO)
             time.sleep(0.05)
-            momia.rect.x = momia.rect.x + 30
+            # -----PROGRAMACIÓN MOMIA--------#
+            if key_pressed[pygame.K_UP]:
+                momia.rect.move_ip(0, -30)
+            if key_pressed[pygame.K_DOWN]:
+                momia.rect.move_ip(0, 30)
+            if key_pressed[pygame.K_RIGHT]:
+                momia.rect.move_ip(-30, 0)
+            if key_pressed[pygame.K_RIGHT]:
+                momia.rect.move_ip(30, 0)
             coordenadasVX = coordenadasAX
             turno = False
+
+
         elif key_pressed[pygame.K_DOWN]:
             heroe_guerrero.rect.move_ip(0,30)
             #PANTALLA.fill(BLANCO)
             time.sleep(0.05)
-            momia.rect.x = momia.rect.x + 30
+            # -----PROGRAMACIÓN MOMIA--------#
+            if key_pressed[pygame.K_UP]:
+                momia.rect.move_ip(0, -30)
+            if key_pressed[pygame.K_DOWN]:
+                momia.rect.move_ip(0, 30)
+            if key_pressed[pygame.K_RIGHT]:
+                momia.rect.move_ip(-30, 0)
+            if key_pressed[pygame.K_LEFT]:
+                momia.rect.move_ip(30, 0)
+                #colision
+            if pygame.sprite.collide_mask(momia,paredes_tutorial):
+                momia.rect.move_ip(0,30)
             turno = False
         elif key_pressed[pygame.K_LEFT]:
             heroe_guerrero.rect.move_ip(-30,0)
             #PANTALLA.fill(BLANCO)
             time.sleep(0.05)
-            momia.rect.x = momia.rect.x + 30
+            # -----PROGRAMACIÓN MOMIA--------#
+            if key_pressed[pygame.K_UP]:
+                momia.rect.move_ip(0, -30)
+            if key_pressed[pygame.K_DOWN]:
+                momia.rect.move_ip(0, 30)
+            if key_pressed[pygame.K_RIGHT]:
+                momia.rect.move_ip(-30, 0)
+            if key_pressed[pygame.K_LEFT]:
+                momia.rect.move_ip(30, 0)
             turno = False
         elif key_pressed[pygame.K_RIGHT]:
             heroe_guerrero.rect.move_ip(30,0)
             #PANTALLA.fill(BLANCO)
             time.sleep(0.05)
-            momia.rect.x = momia.rect.x + 30
+            #-----PROGRAMACIÓN MOMIA--------#
+            if key_pressed[pygame.K_UP]:
+                momia.rect.move_ip(0, -30)
+            if key_pressed[pygame.K_DOWN]:
+                momia.rect.move_ip(0, 30)
+            if key_pressed[pygame.K_RIGHT]:
+                momia.rect.move_ip(-30, 0)
+            if key_pressed[pygame.K_LEFT]:
+                momia.rect.move_ip(30, 0)
+
             turno = False
 ###----------------COLISIONES--------------------------###
         ###colision de personaje con paredes
@@ -250,6 +296,15 @@ while True:
             PANTALLA.fill(BLANCO)
             PANTALLA.blit(ganaste, (8, 8))
             game()
+            #colisión de la momia
+            if pygame.sprite.collide_mask(momia,paredes_tutorial) and key_pressed[pygame.K_UP]:
+                momia.rect.move_ip(0,-30)
+            if pygame.sprite.collide_mask(momia,paredes_tutorial) and key_pressed[pygame.K_DOWN]:
+                momia.rect.move_ip(0,30)
+            if pygame.sprite.collide_mask(momia,paredes_tutorial) and key_pressed[pygame.K_RIGHT]:
+                momia.rect.move_ip(-30,0)
+            if pygame.sprite.collide_mask(momia,paredes_tutorial) and key_pressed[pygame.K_LEFT]:
+                momia.rect.move_ip(30,0)
             #sistema de turnos
 
             ###PROGRAMACION DE LA MOMIA###
