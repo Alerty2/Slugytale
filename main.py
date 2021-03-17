@@ -1,14 +1,15 @@
 import pygame
 import sys
 import time
-import morralla
+import enemigos
 turno = True
 PANTALLA = pygame.display.set_mode((1000,600))
 icono = pygame.image.load("imagenes/logo.png")
 pygame.display.set_icon(icono)
 img_boton = pygame.image.load("imagenes/boton.png")
 #-----------DECLARAR LOS SPRITES CON CLASES---------#
-#boton inicio
+
+            ### boton inicio ###
 class Boton(pygame.sprite.Sprite):
     def __init__(self,imagen):
         super().__init__()
@@ -16,36 +17,38 @@ class Boton(pygame.sprite.Sprite):
         self.image = pygame.image.load(imagen)
         self.rect = self.image.get_rect()
         boton45 = pygame.image.load("imagenes/boton.png")
-            ###personajes###
-#hero guerrero
+            ###PERSONAJES###
+        ### hero guerrero ###
 class Heroe(pygame.sprite.Sprite):
     def __init__(self,imagen):
         super().__init__()
         self.image = pygame.image.load(imagen)
         self.rect = self.image.get_rect()
         self.speed = 1
-            ###partes mazmorra###
-#paredes
+          ###---partes mazmorra---###
+            ### paredes ###
 class Pared(pygame.sprite.Sprite):
     def __init__(self,imagen):
         super().__init__()
         self.image = pygame.image.load(imagen)
         self.rect = self.image.get_rect()
-#suelo
+            ### suelo ###
 class Suelo(pygame.sprite.Sprite):
     def __init__(self,imagen):
         super().__init__()
         self.image = pygame.image.load(imagen)
         self.rect = self.image.get_rect()
             ###escaleras###
-#ecaleras primer piso
+
+
+    ###  ecaleras primer piso ###
 class Escaleras(pygame.sprite.Sprite):
     def __init__(self,imagen):
         super().__init__()
         self.image = pygame.image.load(imagen)
         self.rect = self.image.get_rect()
-#momia
-class momia(morralla.Enemigo):
+            ### momia ###
+class momia(enemigos.Enemigo):
     def __init__(self, imagen):
         super().__init__(imagen)
         self.image = pygame.image.load(imagen)
@@ -103,7 +106,6 @@ coordenadasVY = 0
 listadejemplo = []
 ###------DECLARACION DE CLASES_Y_SPRITES---------###
 
-
 ###botón menu principal###
 boton = Boton("imagenes/boton.png")
 boton_group = pygame.sprite.Group()
@@ -125,16 +127,11 @@ mazmorra = pygame.sprite.Group()
 #escaleras
 escaleras_n1 = Escaleras("imagenes/escaleras.png")
 #momia
-momia = morralla.momia("imagenes/momia1.png")
+momia = enemigos.momia("imagenes/momia1.png")
 
 #------------------------------------------------------------
 #reloj
 reloj = pygame.time.Clock()
-#-----------------ENEMIGOS-------------------------------------------#
-#slime
-#slime = #LaMorralla.Enemigo(68,12)
-#slime.atacar()
-pedo=1
 #---------------------VARIABLES 2------------------------#
 izquierdamomia = momia.rect.x - 30,momia.rect.y
 derechamomia = momia.rect.x + 30, momia.rect.y
@@ -215,63 +212,18 @@ while True:
             heroe_guerrero.rect.move_ip(0,-30)
             #PANTALLA.fill(BLANCO)
             time.sleep(0.05)
-            # -----PROGRAMACIÓN MOMIA--------#
-            if key_pressed[pygame.K_UP]:
-                momia.rect.move_ip(0, -30)
-            if key_pressed[pygame.K_DOWN]:
-                momia.rect.move_ip(0, 30)
-            if key_pressed[pygame.K_RIGHT]:
-                momia.rect.move_ip(-30, 0)
-            if key_pressed[pygame.K_RIGHT]:
-                momia.rect.move_ip(30, 0)
-            coordenadasVX = coordenadasAX
-            turno = False
-
-
         elif key_pressed[pygame.K_DOWN]:
             heroe_guerrero.rect.move_ip(0,30)
             #PANTALLA.fill(BLANCO)
             time.sleep(0.05)
-            # -----PROGRAMACIÓN MOMIA--------#
-            if key_pressed[pygame.K_UP]:
-                momia.rect.move_ip(0, -30)
-            if key_pressed[pygame.K_DOWN]:
-                momia.rect.move_ip(0, 30)
-            if key_pressed[pygame.K_RIGHT]:
-                momia.rect.move_ip(-30, 0)
-            if key_pressed[pygame.K_LEFT]:
-                momia.rect.move_ip(30, 0)
-                #colision
-            if pygame.sprite.collide_mask(momia,paredes_tutorial):
-                momia.rect.move_ip(0,30)
             turno = False
         elif key_pressed[pygame.K_LEFT]:
             heroe_guerrero.rect.move_ip(-30,0)
             #PANTALLA.fill(BLANCO)
             time.sleep(0.05)
-            # -----PROGRAMACIÓN MOMIA--------#
-            if key_pressed[pygame.K_UP]:
-                momia.rect.move_ip(0, -30)
-            if key_pressed[pygame.K_DOWN]:
-                momia.rect.move_ip(0, 30)
-            if key_pressed[pygame.K_RIGHT]:
-                momia.rect.move_ip(-30, 0)
-            if key_pressed[pygame.K_LEFT]:
-                momia.rect.move_ip(30, 0)
-            turno = False
         elif key_pressed[pygame.K_RIGHT]:
             heroe_guerrero.rect.move_ip(30,0)
-            #PANTALLA.fill(BLANCO)
-            time.sleep(0.05)
-            #-----PROGRAMACIÓN MOMIA--------#
-            if key_pressed[pygame.K_UP]:
-                momia.rect.move_ip(0, -30)
-            if key_pressed[pygame.K_DOWN]:
-                momia.rect.move_ip(0, 30)
-            if key_pressed[pygame.K_RIGHT]:
-                momia.rect.move_ip(-30, 0)
-            if key_pressed[pygame.K_LEFT]:
-                momia.rect.move_ip(30, 0)
+
 
             turno = False
 ###----------------COLISIONES--------------------------###
@@ -296,23 +248,17 @@ while True:
             PANTALLA.fill(BLANCO)
             PANTALLA.blit(ganaste, (8, 8))
             game()
-            #colisión de la momia
-            if pygame.sprite.collide_mask(momia,paredes_tutorial) and key_pressed[pygame.K_UP]:
-                momia.rect.move_ip(0,-30)
-            if pygame.sprite.collide_mask(momia,paredes_tutorial) and key_pressed[pygame.K_DOWN]:
-                momia.rect.move_ip(0,30)
-            if pygame.sprite.collide_mask(momia,paredes_tutorial) and key_pressed[pygame.K_RIGHT]:
-                momia.rect.move_ip(-30,0)
-            if pygame.sprite.collide_mask(momia,paredes_tutorial) and key_pressed[pygame.K_LEFT]:
-                momia.rect.move_ip(30,0)
-            #sistema de turnos
-
-            ###PROGRAMACION DE LA MOMIA###
-            if turno == False:
-                pass
-                # momia.rect.x = heroe_guerrero.rect.x - momia.rect.x + 10
             ###EJECUTAR EL SEGUNDO TUTORIAL###
             tutorial2()
+        #@# PROGRAMACIÓN DE LA MOMIA #@#
+        if pygame.sprite.collide_mask(momia,paredes_tutorial) and key_pressed[pygame.K_UP]:
+            momia.rect.move_ip(0,-30)
+        if pygame.sprite.collide_mask(momia,paredes_tutorial) and key_pressed[pygame.K_DOWN]:
+            momia.rect.move_ip(0,30)
+        if pygame.sprite.collide_mask(momia,paredes_tutorial) and key_pressed[pygame.K_RIGHT]:
+            momia.rect.move_ip(-30,0)
+        if pygame.sprite.collide_mask(momia,paredes_tutorial) and key_pressed[pygame.K_LEFT]:
+            momia.rect.move_ip(30,0)
         #SISTEMA DE TURNOS
     ###-----------ACTUALIZAR PANTALLA-----------------###
     pygame.display.flip()
